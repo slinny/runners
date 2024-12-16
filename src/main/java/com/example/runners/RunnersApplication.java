@@ -2,6 +2,7 @@ package com.example.runners;
 
 import com.example.runners.run.Location;
 import com.example.runners.run.Run;
+import com.example.runners.run.RunRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -23,9 +24,10 @@ public class RunnersApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner() {
+	CommandLineRunner runner(RunRepository runRepository) {
 		return args -> {
 			Run run = new Run(1,"Run", LocalDateTime.now(),LocalDateTime.now().plus(6, ChronoUnit.MINUTES),1, Location.OUTDOOR);
+			runRepository.create(run);
 			log.info("Run: " + run);
 		};
 	}
